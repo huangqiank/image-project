@@ -1,7 +1,6 @@
 import pytesseract
 import cv2
-import sys
-# Load the image from file
+
 def ocr_image(image_path):
     img = cv2.imread(image_path)
     # Convert image to gray scale
@@ -10,7 +9,7 @@ def ocr_image(image_path):
     text = pytesseract.image_to_string(gray)
     return text
 
-# Example usage
+
 image_path = 'data/1.png'
 extracted_text = ocr_image(image_path)
 print("Extracted Text:\n", extracted_text)

@@ -23,7 +23,7 @@ class SimpleOCRModel(nn.Module):
         return x
 
 
-# 训练函数
+
 def train_ocr_model(model, train_loader, optimizer, criterion, num_epochs=10):
     model.train()
     for epoch in range(num_epochs):
@@ -38,7 +38,7 @@ def train_ocr_model(model, train_loader, optimizer, criterion, num_epochs=10):
         print(f'Epoch {epoch + 1}, Loss: {total_loss:.4f}')
 
 
-# 测试函数
+
 def test_ocr_model(model, test_loader):
     model.eval()
     correct = 0
@@ -52,27 +52,27 @@ def test_ocr_model(model, test_loader):
     print(f'Test Accuracy: {100 * correct / total:.2f}%')
 
 
-# 数据加载和预处理
+
 transform = transforms.Compose([
-    transforms.Grayscale(),  # 转换为灰度图像
-    transforms.Resize((28, 28)),  # 确保图像大小为28x28
-    transforms.ToTensor(),  # 转换为张量
-    transforms.Normalize((0.5,), (0.5,))  # 标准化
+    transforms.Grayscale(),
+    transforms.Resize((28, 28)),
+    transforms.ToTensor(),
+    transforms.Normalize((0.5,), (0.5,))
 ])
 
-# 下载并加载MNIST数据集
+
 train_dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
 test_dataset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)
 
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
 test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=64, shuffle=False)
 
-# 初始化模型、优化器和损失函数
+
 model = SimpleOCRModel(num_classes=10)  # MNIST有10个类别(数字0-9)
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 criterion = nn.CrossEntropyLoss()
 
-# 开始训练
+
 train_ocr_model(model, train_loader, optimizer, criterion, num_epochs=5)
-# 测试模型
+
 test_ocr_model(model, test_loader)
